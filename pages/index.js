@@ -1,16 +1,11 @@
 import Format from '../components/layout/Format'
+import Section1 from '../components/Section1'
 
 
 export default function Home() {
   return (
     <Format >
-      
-      
-      
-      <h1>Main Content</h1>
-      
-
-      
+     <Section1 />     
     </Format>
   )
 }
