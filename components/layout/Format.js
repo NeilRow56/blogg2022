@@ -11,8 +11,10 @@ export default function format ({ children }) {
 
             </Head>
             <Navbar /> 
+            
             <main>{ children}</main>
             <Footer />
+            
         </>
     )
 }
