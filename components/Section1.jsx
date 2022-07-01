@@ -26,7 +26,7 @@ const Section1 = () => {
                 slidesPerView={1}
                 loop={true}
                 autoplay={{
-                    delay: 5000
+                    delay: 50000
                 }}
                 
                 >
