@@ -24,10 +24,10 @@ const Section1 = () => {
             <Swiper
                
                 slidesPerView={1}
-                loop={true}
-                autoplay={{
-                    delay: 50000
-                }}
+                // loop={true}
+                // autoplay={{
+                //     delay: 50000
+                // }}
                 
                 >
                 <SwiperSlide>{ Slide() }</SwiperSlide>
