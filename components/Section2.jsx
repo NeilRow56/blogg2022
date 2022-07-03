@@ -3,12 +3,16 @@ import Link from 'next/link'
 import React from 'react'
 import Author from './_child/Author'
 import Fetcher from '../lib/fetcher'
+import Spinner from '../components/_child/Spinner'
+import Error from '../components/_child/Error'
 
 
 const Section2 = () => {
 
     const { data, isLoading, isError } = Fetcher('api/posts')
-    if(data) console.log(data)
+    
+    if( isLoading ) return <Spinner />
+    if( isError ) return < Error />
  
   return (
     <section className='container mx-auto md:px-20 py-10 '>
@@ -16,12 +20,11 @@ const Section2 = () => {
       
       {/* grid columns */}
       <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-14'>
-            { Post() }
-            { Post() }
-            { Post() }
-            { Post() }
-            { Post() }
-            { Post() }
+            {
+                data.map((value, index) => (
+                    <Post data={value} key={index}></Post>
+                ))
+            }
       </div>
     </section>
   )
@@ -30,25 +33,26 @@ const Section2 = () => {
 export default Section2
 
 
-function Post () {
+function Post ( {data} ) {
+    const { id, title, subtitle, category, img, published, author } = data;
+
     return (
         <div className='item'>
             <div className='images'>
-            <Link href={"/"}><a><Image className='rounded' src={"/images/img1.jpg"} alt="" width={500} height={350} /></a></Link>
+            <Link href={"/"}><a><Image className='rounded' src={img || "/"}  alt="" width={500} height={350} /></a></Link>
             </div>
             <div className='info flex justify-center flex-col py-4'>
                 <div className="cat">
-                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">Business, Travel</a></Link>
-                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- July 3, 2022</a></Link>
+                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown"}</a></Link>
+                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className="text-xl  font-bold text-gray-800 hover:text-gray-600">Your most unhappy customers are your greatest source of learning</a></Link>
+                    <Link href={"/"}><a className="text-xl  font-bold text-gray-800 hover:text-gray-600">{ title || "Unknown"}</a></Link>
                 </div>
                 <p className="text-gray-500 py-3">
-                    Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind 
-                    text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+                    {subtitle || ""}
                 </p>
-                <Author />
+                { author ? <Author /> : <></>}
 
             </div>
         </div>
