@@ -1,6 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import Author from "./_child/Author"
+import Fetcher from '../lib/fetcher'
+import Spinner from '../components/_child/Spinner'
+import Error from '../components/_child/Error'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Autoplay } from 'swiper'
@@ -9,6 +12,11 @@ import SwiperCore, { Autoplay } from 'swiper'
 import 'swiper/css';
 
 const Section1 = () => {
+
+    const { data, isLoading, isError } = Fetcher('api/trending')
+    
+    if( isLoading ) return <Spinner />
+    if( isError ) return < Error />
 
     SwiperCore.use([Autoplay])
 
@@ -30,11 +38,13 @@ const Section1 = () => {
                 // }}
                 
                 >
-                <SwiperSlide>{ Slide() }</SwiperSlide>
-                <SwiperSlide>{ Slide() }</SwiperSlide>
-                <SwiperSlide>{ Slide() }</SwiperSlide>
-                <SwiperSlide>{ Slide() }</SwiperSlide>
-                <SwiperSlide>{ Slide() }</SwiperSlide>
+                {
+                    data.map((value, index) =>(
+                        <SwiperSlide key={index}>
+                            <Slide data={value}></Slide>
+                        </SwiperSlide>
+                    ))
+                }
                 
       ...
             </Swiper>
@@ -49,25 +59,30 @@ const Section1 = () => {
 
 export default Section1
 
-function Slide () {
+function Slide ({data}) {
+
+    const { id, title, subtitle, description, category, img, published, author } = data;
+
     return (
         <div className='grid md:grid-cols-2'>
             <div className="image">
-                <Link href={"/"}><a><Image src={"/images/img1.jpg"} alt="" width={600} height={600} /></a></Link>
+                <Link href={"/"}><a><Image src={img || '/'} alt="" width={600} height={600} /></a></Link>
             </div>
             <div className="info flex justify-center flex-col">
                 <div className="cat">
-                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">Business, Travel</a></Link>
-                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- July 3, 2022</a></Link>
+                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown "}</a></Link>
+                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className="text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600">Your most unhappy customers are your greatest source of learning</a></Link>
+                    <Link href={"/"}><a className="text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600">{title || "Unknown"}</a></Link>
                 </div>
                 <p className="text-gray-500 py-3">
-                    Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind 
-                    text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+                    {subtitle || "subtitle"}
                 </p>
-                <Author />
+                <p className="text-gray-500 py-3">
+                    {description || "description"}
+                </p>
+                { author ? <Author /> : <></>}
             </div>
         </div>
     )

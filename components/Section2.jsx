@@ -9,7 +9,7 @@ import Error from '../components/_child/Error'
 
 const Section2 = () => {
 
-    const { data, isLoading, isError } = Fetcher('api/posts')
+    const { data, isLoading, isError } = Fetcher('api/trending')
     
     if( isLoading ) return <Spinner />
     if( isError ) return < Error />
