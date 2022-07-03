@@ -43,16 +43,16 @@ function Post ( {data} ) {
             </div>
             <div className='info flex justify-center flex-col py-4'>
                 <div className="cat">
-                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown"}</a></Link>
-                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
+                    <Link href={`posts${id}`}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown"}</a></Link>
+                    <Link href={`posts${id}`}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className="text-xl  font-bold text-gray-800 hover:text-gray-600">{ title || "Unknown"}</a></Link>
+                    <Link href={`posts${id}`}><a className="text-xl  font-bold text-gray-800 hover:text-gray-600">{ title || "Unknown"}</a></Link>
                 </div>
                 <p className="text-gray-500 py-3">
                     {subtitle || ""}
                 </p>
-                { author ? <Author /> : <></>}
+                { author ? <Author {...author}/> : <></>}
 
             </div>
         </div>

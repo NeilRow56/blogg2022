@@ -51,20 +51,20 @@ function Post ({ data }) {
     return (
         <div className='flex gap-5'>
             <div className='image fle flex-col justify-start'>
-            <Link href={"/"}><a><Image className='' src={img || "" }  alt="" width={300} height={250} /></a></Link>
+            <Link href={`/posts/${id}`}><a><Image className='' src={img || "" }  alt="" width={300} height={250} /></a></Link>
             </div>
             <div className='info flex justify-center flex-col '>
             <div className="cat">
-                    <Link href={"/"}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown"}</a></Link>
-                    <Link href={"/"}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
+                    <Link href={`/posts/${id}`}><a className="text-orange-600 hover:text-orange-800">{category || "Unknown"}</a></Link>
+                    <Link href={`/posts/${id}`}><a className="text-gray-800 hover:text-gray-600">- {published || "Unknown"}</a></Link>
                 </div>
                 <div className="title">
-                    <Link href={"/"}><a className="text-xl   font-bold text-gray-800 hover:text-gray-600">{title || "No Title"}</a></Link>
+                    <Link href={`/posts/${id}`}><a className="text-xl   font-bold text-gray-800 hover:text-gray-600">{title || "No Title"}</a></Link>
                 </div>
                 <p className="text-gray-500 py-3">
                     { description || "No description"}
                 </p>
-                { author ? <Author></Author> : <></>}
+                { author ? <Author {...author}/> : <></>}
             </div>
         </div>
     )
